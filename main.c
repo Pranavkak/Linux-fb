@@ -41,15 +41,16 @@ int main() {
         return 4;
     }
 
-    // Clear the framebuffer (fill with black)
-    memset(fbp, 0, screensize);
+    // Fill the framebuffer with blue color
+    for (y = 0; y < vinfo.yres; y++) {
+        for (x = 0; x < vinfo.xres; x++) {
+            offset = (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8) +
+                     (y + vinfo.yoffset) * finfo.line_length;
 
-    // Draw a red pixel at (100, 100)
-    x = 100;
-    y = 100;
-    offset = (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8) +
-             (y + vinfo.yoffset) * finfo.line_length;
-    *((unsigned int *)(fbp + offset)) = 0xFF0000; // Red color
+            // Set pixel color to blue (0x0000FF)
+            *((unsigned int *)(fbp + offset)) = 0x0000FF;
+        }
+    }
 
     // Wait for user input before exiting
     printf("Press Enter to exit...");
